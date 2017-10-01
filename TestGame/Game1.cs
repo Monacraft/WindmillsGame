@@ -100,9 +100,7 @@ namespace TestGame
 				}
 			}
 			else
-			{
-				//Console.WriteLine("But a chance");
-				//AsynchronousClient.SendData(GameData.Players[MyID].ClientSend());				
+			{	
 				if (k.IsKeyDown(Keys.W))
 					GameData.Players[MyID].y-=3;
 				if (k.IsKeyDown(Keys.S))
@@ -121,9 +119,6 @@ namespace TestGame
 					myPlayer.x+=3;*/
 			}
 			update = true;
-			//client.Send(GameData.Players[MyID].ClientSend());
-			// TODO: Add your update logic here
-			//AsynchronousClient.UpdateSync.Set();
 			base.Update(gameTime);
 		}
 
