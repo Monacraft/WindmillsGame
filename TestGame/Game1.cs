@@ -80,6 +80,9 @@ namespace TestGame
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 
 		public KeyboardState k;
+		public MouseState m;
+		public KeyboardState ok;
+		public MouseState om;
 		public static bool update;
 		protected override void Update(GameTime gameTime)
 		{
@@ -89,36 +92,18 @@ namespace TestGame
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 				Exit();
 #endif
-
-			k = Keyboard.GetState();
+			ok = k;							// Store Old States
+			om = m;
+			k = Keyboard.GetState();		// Get New States
+			m = Mouse.GetState();
 			if (MyID == -1)
 			{
-				update = true;
-				if (MyID == -1)
-				{
-					Console.WriteLine("Error, NO ID Assigned");
-				}
+				Console.WriteLine("NB: NO ID Assigned");
 			}
 			else
-			{	
-				if (k.IsKeyDown(Keys.W))
-					GameData.Players[MyID].y-=3;
-				if (k.IsKeyDown(Keys.S))
-					GameData.Players[MyID].y+=3;
-				if (k.IsKeyDown(Keys.A))
-					GameData.Players[MyID].x-=3;		
-				if (k.IsKeyDown(Keys.D))
-					GameData.Players[MyID].x+=3;
-				/*if (k.IsKeyDown(Keys.W))
-					myPlayer.y-=3;
-				if (k.IsKeyDown(Keys.S))
-					myPlayer.y+=3;
-				if (k.IsKeyDown(Keys.A))
-					myPlayer.x-=3;		
-				if (k.IsKeyDown(Keys.D))
-					myPlayer.x+=3;*/
+			{
+				GameData.Update(ref gameTime, ref k, ref m, MyID);
 			}
-			update = true;
 			base.Update(gameTime);
 		}
 
@@ -131,7 +116,7 @@ namespace TestGame
 			graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
 			spriteBatch.Begin();
-			spriteBatch.Draw(triangle, new Vector2(screenWidth / 2, screenHeight / 2), null, null, Vector2.Zero, 0, new Vector2(0.1f), Color.Red,SpriteEffects.None, 1);
+			spriteBatch.Draw(triangle, new Vector2(screenWidth / 2, screenHeight / 2), null, null, Vector2.Zero, 0, new Vector2(0.1f), Color.Red, SpriteEffects.None, 1);
 			GameData.Draw(ref spriteBatch, ref triangle);
 			spriteBatch.End();
 

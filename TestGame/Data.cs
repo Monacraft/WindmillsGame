@@ -2,6 +2,7 @@
 using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace TestGame
 {
@@ -33,9 +34,12 @@ namespace TestGame
 			string[] d = dat.Split('|');
 			//Console.WriteLine(dat);
 			Int32.TryParse(d[0], out state);
-			//Console.WriteLine(Int32.Parse(d[2]));
 			int id = Int32.Parse(d[2]);
-			if (state == 0) { return -1; }
+			if (state == 0)
+			{
+				Console.WriteLine("Server State 0");
+				return -1;
+			}
 			if (state == 1)
 			{
 				// Menu
@@ -51,7 +55,7 @@ namespace TestGame
 		}
 		public int ParsePlayer(string pdat)
 		{
-			// ID Active Name xPos yPos
+			// ID Active Name xPos yPos [Other Information]
 			string[] ds = pdat.Split(' ');
 			int id = Int32.Parse(ds[0]);
 			if (id == -1)
@@ -70,32 +74,41 @@ namespace TestGame
 			{
 				if (id != Game1.MyID)
 				{
-					Players[id].UpdateThis(float.Parse(ds[3], CultureInfo.InvariantCulture), float.Parse(ds[4], CultureInfo.InvariantCulture), ds[2]);
+
+					Players[id].UpdateThis(ds);
+					// Old Param: float.Parse(ds[3], CultureInfo.InvariantCulture), float.Parse(ds[4], CultureInfo.InvariantCulture), ds[2]);
 				}
 			}
 			return id;
+		}
+		public void Update(ref GameTime gametime, ref KeyboardState k, ref MouseState m, int id)
+		{
+			if (k.IsKeyDown(Keys.W))
+				Players[id].y -= 3;
+			if (k.IsKeyDown(Keys.S))
+				Players[id].y += 3;
+			if (k.IsKeyDown(Keys.A))
+				Players[id].x -= 3;
+			if (k.IsKeyDown(Keys.D))
+				Players[id].x += 3;
+			if (m.X == Players[id].x)
+			{
+				if (m.Y < Players[id].y)
+					Players[id].rotation = Math.PI;
+				else
+					Players[id].rotation = 0;
+			}
+			else
+			{
+				Players[id].rotation = Math.Atan((m.Y - Players[id].y) / (m.X - Players[id].x));
+			}
 		}
 		public void Draw(ref SpriteBatch s, ref Texture2D t)
 		{
 			for (int i = 0; i < playercount; i++)
 			{
-				s.Draw(t, new Vector2(Players[i].x, Players[i].y), null, null,
-				                 Vector2.Zero, 0, new Vector2(0.1f), colours[i],SpriteEffects.None, 1);
+				Players[i].Draw(ref s, ref t);
 			}
 		}
-		/*public string ServerSend(int PlayerTo)
-		{
-			string s = "";
-			s = state.ToString() + "|" + MenuInfo.ToString() + "|" + PlayerTo.ToString() + "|" + this.playercount.ToString() + "|";
-			for (int i = 0; i < playercount; i++)
-			{
-				s += i.ToString() + " " + Players[i].String() + "=";
-			}
-			return s.Substring(0, (s.Length - 1));
-		}
-		public int ServerRecieve(string dat)
-		{
-			return ParsePlayer(dat);
-		}*/
 	}
 }
