@@ -40,14 +40,15 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Old_Client.cs" />
-    <Compile Include="Data.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Data_Main.cs" />
+    <Compile Include="Player_Main.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="Data_Functions.cs" />
+    <Compile Include="Player_Functions.cs" />
+    <Compile Include="Data_NetCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />
-    <None Include="Content\Graphics\triangle.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />

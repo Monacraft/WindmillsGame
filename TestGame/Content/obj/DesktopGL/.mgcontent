@@ -4,6 +4,8 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/jashv/Documents/Projects/TestGame/TestGame/Content/Graphics/triangle.png</File>
+    <File>C:/Users/jashv/Documents/Projects/WindmillsGame/WindmillsGame/TestGame/Content/Graphics/triangle.png</File>
+    <File>C:/Users/jashv/Documents/Projects/WindmillsGame/WindmillsGame/TestGame/Content/Graphics/triangle-tip.png</File>
+    <File>C:/Users/jashv/Documents/Projects/WindmillsGame/WindmillsGame/TestGame/Content/Graphics/crosshair.png</File>
   </SourceFiles>
 </SourceFileCollection>

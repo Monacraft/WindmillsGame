@@ -45,6 +45,8 @@ namespace TestGame
 		/// </summary>
 
 		Texture2D triangle;
+		Texture2D CrossHair;
+		Vector2 mouse;
 		int screenHeight;
 		int screenWidth;
 		public static Data GameData;
@@ -62,12 +64,15 @@ namespace TestGame
 			GameData = new Data();
 			Name = "Jash";
 			MyID = -1;
-			triangle = Content.Load<Texture2D>("Graphics\\triangle");
+			triangle = Content.Load<Texture2D>("Graphics\\triangle-tip");
+			CrossHair = Content.Load<Texture2D>("Graphics\\crosshair");
 			screenWidth = device.PresentationParameters.BackBufferWidth;
 			screenHeight = device.PresentationParameters.BackBufferHeight;
 
 			myPlayer = new Player();
 			myPlayer.Activate(Name, MyID);
+			//myPlayer.colID = -1;
+			//Console.WriteLine("Select Colour: ");
 			Console.Write("IP: ");
 			IP = Console.ReadLine();
 			client = new Client(IP, 11000);
@@ -92,9 +97,9 @@ namespace TestGame
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 				Exit();
 #endif
-			ok = k;							// Store Old States
+			ok = k;                         // Store Old States
 			om = m;
-			k = Keyboard.GetState();		// Get New States
+			k = Keyboard.GetState();        // Get New States
 			m = Mouse.GetState();
 			if (MyID == -1)
 			{
@@ -102,8 +107,10 @@ namespace TestGame
 			}
 			else
 			{
-				GameData.Update(ref gameTime, ref k, ref m, MyID);
+				GameData.Update(MyID, ref k, ref m, ref ok, ref om);
 			}
+			mouse.X = m.X;
+			mouse.Y = m.Y;
 			base.Update(gameTime);
 		}
 
@@ -116,8 +123,14 @@ namespace TestGame
 			graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
 			spriteBatch.Begin();
-			spriteBatch.Draw(triangle, new Vector2(screenWidth / 2, screenHeight / 2), null, null, Vector2.Zero, 0, new Vector2(0.1f), Color.Red, SpriteEffects.None, 1);
+			//spriteBatch.Draw(triangle, new Vector2(screenWidth / 2, screenHeight / 2), null, null,
+			//				 Vector2.Zero, 0, new Vector2(0.1f), Color.Red, SpriteEffects.None, 1);
+
+
 			GameData.Draw(ref spriteBatch, ref triangle);
+
+			spriteBatch.Draw(CrossHair, mouse, new Rectangle(108,108,40,40),
+							 Color.Black, 0f, new Vector2(128,128), new Vector2(1f), SpriteEffects.None, 1);
 			spriteBatch.End();
 
 			base.Draw(gameTime);
