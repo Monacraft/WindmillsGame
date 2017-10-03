@@ -26,7 +26,7 @@ namespace TestGame
 		public string String()
 		{
 			// ID[covered-in-data] .....
-			return BooltoNum(this.active) + " " + Name + " " + x.ToString() + " " + y.ToString()
+			return BooltoNum(this.active) + " " + Name + " " + Pos.X.ToString() + " " + Pos.Y.ToString()
 																+ " " + colorID.ToString() + " " + rotation.ToString();
 		}
 		public static string BooltoNum(bool b)
@@ -34,6 +34,39 @@ namespace TestGame
 			if (b)
 				return "1";
 			return "0";
+		}
+		public static double RotateTo(Vector2 rotatethis, Vector2 towardsthis)
+		{
+			double r = Math.Atan2((towardsthis.Y - rotatethis.Y) , (towardsthis.X - rotatethis.X));
+			if (r < 0)
+				r = (Math.PI * 2) - r + Math.PI/2;
+			/*if (towardsthis.X < rotatethis.X)
+			{
+				if (towardsthis.Y <= rotatethis.Y)
+				{
+					// Quadrant 2
+					r += Math.PI ; 
+				}
+				else
+				{
+					// Quadrant 3
+					r = Math.PI / 2 - r;
+				}
+			}
+			else
+			{
+				if (towardsthis.Y <= rotatethis.Y)
+				{
+					// Quadrant 1
+					r = -r;
+				}
+				else
+				{
+					// Quadrant 4
+					r = Math.PI/2 - r;
+				}
+			}		*/	
+			return r;
 		}
 	}
 }

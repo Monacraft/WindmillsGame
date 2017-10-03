@@ -8,8 +8,9 @@ namespace TestGame
 {
 	public partial class Player
 	{
-		public float x;
-		public float y;
+		//public float x;
+		//public float y;
+		public Vector2 Pos;
 		public bool active; // Used to decide if they've sorted out they're details
 		public string Name;
 		public int ID;
@@ -21,8 +22,7 @@ namespace TestGame
 
 		public Player()
 		{
-			x = 0;
-			y = 0;
+			Pos = new Vector2();
 			active = false;
 			ID = -1;
 			rotation = 0;
@@ -39,8 +39,8 @@ namespace TestGame
 			/// Current: ID Active Name xPos yPos Colour Rotation
 			/// 
 			/// **************
-			this.x = float.Parse(d[3], CultureInfo.InvariantCulture);
-			this.y = float.Parse(d[4], CultureInfo.InvariantCulture);
+			Pos.X = float.Parse(d[3], CultureInfo.InvariantCulture);
+			Pos.Y = float.Parse(d[4], CultureInfo.InvariantCulture);
 			this.Name = d[2];
 			this.colorID = Int32.Parse(d[5]);
 			this.rotation = Double.Parse(d[6]);
@@ -56,32 +56,21 @@ namespace TestGame
 
 			// Controls
 			if (k.IsKeyDown(Keys.W))
-				this.y -= 3;
+				Pos.Y -= 3;
 			if (k.IsKeyDown(Keys.S))
-				this.y += 3;
+				Pos.Y += 3;
 			if (k.IsKeyDown(Keys.A))
-				this.x -= 3;
+				Pos.X -= 3;
 			if (k.IsKeyDown(Keys.D))
-				this.x += 3;
-			
+				Pos.X += 3;
+
 			//Mouse Rotation
-			if (m.X == x)
-			{
-				if (m.Y > this.y)
-					this.rotation = Math.PI;
-				else
-					this.rotation = 0;
-			}
-			else
-			{
-				// ToDo: Fix This Code To Calculate Rotation Angle (I need to use Pi's)
-				rotation = Math.Atan2((m.Y - y) , (m.X - x));
-			}
+			rotation = RotateTo(Pos, new Vector2(m.X, m.Y));
 		}
 		public void Draw(ref SpriteBatch s, ref Texture2D t)
 		{
 			// Draw Command = Texture, DrawPos, SourceRec, DestinationRec, Center, rotation, scale, Color...
-			s.Draw(t, new Vector2(x, y), null, null, new Vector2(t.Width / 2, t.Height / 2)
+			s.Draw(t, Pos, null, null, new Vector2(t.Width / 2, t.Height / 2)
 				   , (float)rotation, new Vector2(0.1f), Colours[this.ID], SpriteEffects.None, 1);
 		}
 	}
