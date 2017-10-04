@@ -66,12 +66,22 @@ namespace TestGame
 
 			//Mouse Rotation
 			rotation = RotateTo(Pos, new Vector2(m.X, m.Y));
+
+			drawTo = new Vector2(m.X, m.Y);
+			if (m.LeftButton == ButtonState.Pressed)
+				drawLine = true;
+			else
+				drawLine = false;
 		}
+		public bool drawLine;
+		public Vector2 drawTo;
 		public void Draw(ref SpriteBatch s, ref Texture2D t)
 		{
 			// Draw Command = Texture, DrawPos, SourceRec, DestinationRec, Center, rotation, scale, Color...
 			s.Draw(t, Pos, null, null, new Vector2(t.Width / 2, t.Height / 2)
 				   , (float)rotation, new Vector2(0.1f), Colours[this.ID], SpriteEffects.None, 1);
+			if (drawLine)
+				this.DrawLine(ref s, drawTo);
 		}
 	}
 }

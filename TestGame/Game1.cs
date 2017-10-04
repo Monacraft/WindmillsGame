@@ -46,6 +46,7 @@ namespace TestGame
 
 		Texture2D triangle;
 		Texture2D CrossHair;
+		public static Texture2D pixel;
 		Vector2 mouse;
 		int screenHeight;
 		int screenWidth;
@@ -64,8 +65,13 @@ namespace TestGame
 			GameData = new Data();
 			Name = "Jash";
 			MyID = -1;
+
+			// ToDo: Load all textures in Data or Player and add Load() to them
 			triangle = Content.Load<Texture2D>("Graphics\\triangle-tip");
 			CrossHair = Content.Load<Texture2D>("Graphics\\crosshair");
+			pixel = new Texture2D(GraphicsDevice, 1, 1);
+			pixel.SetData<Color>(new Color[] { Color.White });
+
 			screenWidth = device.PresentationParameters.BackBufferWidth;
 			screenHeight = device.PresentationParameters.BackBufferHeight;
 

@@ -7,8 +7,21 @@
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workbench ActiveDocument="Game1.cs">
     <Files>
-      <File FileName="Game1.cs" Line="14" Column="3" />
+      <File FileName="Game1.cs" Line="74" Column="4" />
+      <File FileName="Player_Functions.cs" Line="73" Column="11" />
+      <File FileName="Player_Main.cs" Line="84" Column="34" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TestGame" expanded="True">
+            <Node name="TestGame" expanded="True">
+              <Node name="libSDL2-2.0.0.dylib" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
 </Properties>

@@ -68,5 +68,13 @@ namespace TestGame
 			}
 			return r;
 		}
+		public void DrawLine(ref SpriteBatch s, Vector2 To)
+		{
+			Vector2 edge = To - Pos;
+			float angle = (float)Math.Atan2(edge.Y, edge.X);
+	       	s.Draw(Game1.pixel, new Rectangle((int) Pos.X, (int) Pos.Y, (int)edge.Length(), 1), 
+			       null, Color.Black, angle, Vector2.Zero,
+			              SpriteEffects.None, 1);
+		}
 	}
 }
