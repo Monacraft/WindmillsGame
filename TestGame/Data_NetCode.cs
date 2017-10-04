@@ -29,6 +29,7 @@ namespace TestGame
 				MenuInfo = Int32.Parse(d[1]);
 				int P = Int32.Parse(d[3]);
 				playercount = P;
+				//Console.WriteLine(P);
 				foreach (var playerdat in d[4].Split('='))
 				{
 					this.ParsePlayers(playerdat);

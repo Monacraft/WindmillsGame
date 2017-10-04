@@ -16,6 +16,8 @@ namespace TestGame
 		public int ID;
 		public int colorID;
 		public int colorDefault;    // Black = They haven't chosen color
+		public int Grabbing;		// ID's
+		public int GrabbedBy; 		// ID's
 		public static Color[] Colours = {
 			Color.Red, Color.Blue, Color.Green, Color.Orange, Color.Yellow, Color.Purple, Color.Black};
 		public double rotation;
@@ -28,6 +30,8 @@ namespace TestGame
 			rotation = 0;
 			colorDefault = 6;
 			colorID = 6;
+			Grabbing = -1;
+			GrabbedBy = -1;
 		}
 		public void UpdateOthers(string[] d) 
 		{
@@ -35,6 +39,7 @@ namespace TestGame
 			/// Only Called for OTHER Players
 			/// Protocol for Player Information:
 			/// 
+			///          0  1      2    3    4    5      6        7        8
 			/// Planned: ID Active Name xPos yPos Colour Rotation Grabbing GrabbedBy 
 			/// Current: ID Active Name xPos yPos Colour Rotation
 			/// 
@@ -44,6 +49,8 @@ namespace TestGame
 			this.Name = d[2];
 			this.colorID = Int32.Parse(d[5]);
 			this.rotation = Double.Parse(d[6]);
+			this.Grabbing = Int32.Parse(d[7]);
+			//this.GrabbedBy = Int32.Parse(d[8]);
 		}
 		public void Update(int id, ref KeyboardState k, ref MouseState m, ref KeyboardState ok, ref MouseState om)
 		{
@@ -66,7 +73,6 @@ namespace TestGame
 
 			//Mouse Rotation
 			rotation = RotateTo(Pos, new Vector2(m.X, m.Y));
-
 			drawTo = new Vector2(m.X, m.Y);
 			if (m.LeftButton == ButtonState.Pressed)
 				drawLine = true;
@@ -81,7 +87,7 @@ namespace TestGame
 			s.Draw(t, Pos, null, null, new Vector2(t.Width / 2, t.Height / 2)
 				   , (float)rotation, new Vector2(0.1f), Colours[this.ID], SpriteEffects.None, 1);
 			if (drawLine)
-				this.DrawLine(ref s, drawTo);
+				this.DrawLine(ref s, drawTo, Color.Black);
 		}
 	}
 }

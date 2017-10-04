@@ -47,7 +47,7 @@ namespace TestGame
 		Texture2D triangle;
 		Texture2D CrossHair;
 		public static Texture2D pixel;
-		Vector2 mouse;
+		public static Vector2 mouse;
 		int screenHeight;
 		int screenWidth;
 		public static Data GameData;
