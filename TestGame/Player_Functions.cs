@@ -37,35 +37,38 @@ namespace TestGame
 		}
 		public static double RotateTo(Vector2 rotatethis, Vector2 towardsthis)
 		{
-			double r = Math.Atan2((towardsthis.Y - rotatethis.Y) , (towardsthis.X - rotatethis.X));
-			if (r < 0)
-				r = (Math.PI * 2) - r + Math.PI/2;
-			/*if (towardsthis.X < rotatethis.X)
+			float ydiff = towardsthis.Y - rotatethis.Y;
+			float xdiff = towardsthis.X - rotatethis.X;
+			float ya = Math.Abs(ydiff);
+			float xa = Math.Abs(xdiff);
+			double r;
+			if (ydiff > 0)
 			{
-				if (towardsthis.Y <= rotatethis.Y)
+				if (xdiff > 0)
 				{
-					// Quadrant 2
-					r += Math.PI ; 
+					//Console.WriteLine("Bottom Right, {0} from {1},{2}", Math.Atan2(ya, xa) * 180 / Math.PI, xa, ya);
+					r = Math.Atan2(ya, xa) + Math.PI/2;
 				}
 				else
 				{
-					// Quadrant 3
-					r = Math.PI / 2 - r;
+					//Console.WriteLine("Bottom Left, {0} from {1},{2}", Math.Atan2(ya, xa) * 180 / Math.PI, xa, ya);
+					r = 3 * Math.PI / 2 - Math.Atan2(ya, xa);
 				}
 			}
 			else
 			{
-				if (towardsthis.Y <= rotatethis.Y)
+				if (towardsthis.X > rotatethis.X)
 				{
-					// Quadrant 1
-					r = -r;
+					//Console.WriteLine("Top Right, {0} from {1},{2}", Math.Atan2(ya, xa) * 180 / Math.PI, xa, ya);
+					r = Math.PI /2 - Math.Atan2(ya, xa);
 				}
 				else
 				{
-					// Quadrant 4
-					r = Math.PI/2 - r;
+					//Console.WriteLine("Top Left, {0} from {1},{2}", Math.Atan2(ya, xa) * 180 / Math.PI, xa, ya);
+					r = 3 * Math.PI / 2 + Math.Atan2(ya, xa);
 				}
-			}		*/	
+			}
+			Console.WriteLine((r * (180/Math.PI)).ToString());
 			return r;
 		}
 	}

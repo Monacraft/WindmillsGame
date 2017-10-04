@@ -130,7 +130,7 @@ namespace TestGame
 			GameData.Draw(ref spriteBatch, ref triangle);
 
 			spriteBatch.Draw(CrossHair, mouse, new Rectangle(108,108,40,40),
-							 Color.Black, 0f, new Vector2(128,128), new Vector2(1f), SpriteEffects.None, 1);
+							 Color.Black, 0f, new Vector2(20,20), new Vector2(1f), SpriteEffects.None, 1);
 			spriteBatch.End();
 
 			base.Draw(gameTime);

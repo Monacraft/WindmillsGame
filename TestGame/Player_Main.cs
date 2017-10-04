@@ -45,7 +45,7 @@ namespace TestGame
 			this.colorID = Int32.Parse(d[5]);
 			this.rotation = Double.Parse(d[6]);
 		}
-		public void Update(int id, ref KeyboardState k, ref MouseState m, ref KeyboardState ok, ref MouseState o)
+		public void Update(int id, ref KeyboardState k, ref MouseState m, ref KeyboardState ok, ref MouseState om)
 		{
 			// Only Called For the Client's Player
 			// Only Use To Update Player Specific Stuff (not involving not-this-player variables)
@@ -65,7 +65,8 @@ namespace TestGame
 				Pos.X += 3;
 
 			//Mouse Rotation
-			rotation = RotateTo(Pos, new Vector2(m.X, m.Y));
+			if (om.X != m.X || om.Y != m.Y)
+				rotation = RotateTo(Pos, new Vector2(m.X, m.Y));
 		}
 		public void Draw(ref SpriteBatch s, ref Texture2D t)
 		{
