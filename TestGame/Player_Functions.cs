@@ -41,34 +41,31 @@ namespace TestGame
 			float xdiff = towardsthis.X - rotatethis.X;
 			float ya = Math.Abs(ydiff);
 			float xa = Math.Abs(xdiff);
-			double r;
+			double r = Math.Atan2(ya, xa);
 			if (ydiff > 0)
 			{
 				if (xdiff > 0)
 				{
-					//Console.WriteLine("Bottom Right, {0} from {1},{2}", Math.Atan2(ya, xa) * 180 / Math.PI, xa, ya);
-					r = Math.Atan2(ya, xa) + Math.PI/2;
+					// Bottom Right
+					r = Math.PI / 2 + r;
 				}
 				else
 				{
-					//Console.WriteLine("Bottom Left, {0} from {1},{2}", Math.Atan2(ya, xa) * 180 / Math.PI, xa, ya);
-					r = 3 * Math.PI / 2 - Math.Atan2(ya, xa);
+					r = Math.PI * 3 / 2 - r;
 				}
 			}
 			else
 			{
-				if (towardsthis.X > rotatethis.X)
+				if (xdiff > 0 )
 				{
-					//Console.WriteLine("Top Right, {0} from {1},{2}", Math.Atan2(ya, xa) * 180 / Math.PI, xa, ya);
-					r = Math.PI /2 - Math.Atan2(ya, xa);
+					// Top Right
+					r = Math.PI/2 - r ;
 				}
 				else
 				{
-					//Console.WriteLine("Top Left, {0} from {1},{2}", Math.Atan2(ya, xa) * 180 / Math.PI, xa, ya);
-					r = 3 * Math.PI / 2 + Math.Atan2(ya, xa);
+					r = Math.PI * 3 /2 + r;
 				}
 			}
-			Console.WriteLine((r * (180/Math.PI)).ToString());
 			return r;
 		}
 	}

@@ -65,8 +65,7 @@ namespace TestGame
 				Pos.X += 3;
 
 			//Mouse Rotation
-			if (om.X != m.X || om.Y != m.Y)
-				rotation = RotateTo(Pos, new Vector2(m.X, m.Y));
+			rotation = RotateTo(Pos, new Vector2(m.X, m.Y));
 		}
 		public void Draw(ref SpriteBatch s, ref Texture2D t)
 		{
