@@ -28,11 +28,14 @@ namespace TestGame
 		/// related content.  Calling base.Initialize will enumerate through any components
 		/// and initialize them as well.
 		/// </summary>
+
+		public static Vector2 screenCenter;
 		protected override void Initialize()
 		{
 			// TODO: Add your initialization logic here
 			graphics.PreferredBackBufferWidth = 640;
 			graphics.PreferredBackBufferHeight = 640;
+			screenCenter = new Vector2(320, 320);
 			graphics.IsFullScreen = false;
 			graphics.ApplyChanges();
 			Window.Title = "WindMills Game - Alpha 0.1";

@@ -70,9 +70,10 @@ namespace TestGame
 		}
 		public void DrawLine(ref SpriteBatch s, Vector2 To, Color c)
 		{
-			Vector2 edge = To - Pos;
+			Vector2 usePos = drawPos; // usePos = Pos for unlocked
+			Vector2 edge = To - usePos;
 			float angle = (float)Math.Atan2(edge.Y, edge.X);
-	       	s.Draw(Game1.pixel, new Rectangle((int) Pos.X, (int) Pos.Y, (int)edge.Length(), 2), 
+	       	s.Draw(Game1.pixel, new Rectangle((int) usePos.X, (int) usePos.Y, (int)edge.Length(), 2), 
 			       null, c, angle, Vector2.Zero,
 			              SpriteEffects.None, 1);
 		}

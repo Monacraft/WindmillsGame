@@ -22,43 +22,27 @@ namespace TestGame
 			{
 				this.Players[i] = new Player();
 			}
+			oldGrab = -1;
 		}
 		public double c;
-		//public int oldGrab;
+		public int oldGrab;
 		public void Update(int id, ref KeyboardState k, ref MouseState m, ref KeyboardState ok, ref MouseState om)
 		{
 			// Only Use For General Game Stuff (Not stuff specific to main player only)
 			// Params: ID = Client's ID, k/m = Keyboard and Mouse States, ok/om = States 1-tick ago
-			for (int i = 0; i < playercount; i++)
-			{
-				Players[i].canGrab = true;
-			}
-			for (int i = 0; i < playercount; i++)
-			{
-				if (Players[i].Grabbing != -1)
-				{
-					if (Players[i].Grabbing == id)
-					{
-						Players[i].canGrab = false; //Can't grab players grabbing you
-						c = Math.Sqrt(
-							Math.Pow((Players[id].Pos.X - Players[i].Pos.X), 2) +
-							Math.Pow((Players[id].Pos.Y - Players[i].Pos.Y), 2)
-							);
-						Players[id].Pos.X = Players[i].Pos.X + (float)(c * Math.Cos(Players[i].rotation - Math.PI / 2));
-						Players[id].Pos.Y = Players[i].Pos.Y + (float)(c * Math.Sin(Players[i].rotation - Math.PI / 2));
-						if (true)
-						{
-							Console.WriteLine("{0}, {1}: ({2}, {3})",
-											 c, Players[i].rotation,
-											 Players[id].Pos.X,
-											 Players[id].Pos.Y);
-						}
-					}
-					Players[Players[i].Grabbing].canGrab = false; // Can't grab grabbed players
-				}
-			}
+
+			Grab(id);
 
 			Players[id].Update(id, ref k, ref m, ref ok, ref om);
+
+			// Locked Screen:
+			for (int i = 0; i<playercount; i++)
+			{
+				if (i != id)
+				{
+					Players[i].drawPos = Players[i].Pos - Players[id].Pos + Game1.screenCenter;
+				}
+			}
 
 			if (m.LeftButton == ButtonState.Pressed)
 			{
@@ -69,7 +53,7 @@ namespace TestGame
 				for (int i = 0; i < playercount; i++)
 				{
 					if (i != id && Players[i].active && Players[i].canGrab)
-						if (IsInside(mouseBorder(), Players[i].Pos))
+					if ((mouseBorder().Contains(Players[i].drawPos))) 			// .Pos for unlocked
 						{
 							Players[id].Grabbing = i;
 							Console.WriteLine("You Grabbed P{0}", i);
@@ -84,6 +68,7 @@ namespace TestGame
 		}
 		public void Draw(ref SpriteBatch s, ref Texture2D t)
 		{
+			// Reference for center = Players[id].Pos
 			for (int i = 0; i < playercount; i++)
 			{
 				Players[i].Draw(ref s, ref t);
@@ -92,7 +77,8 @@ namespace TestGame
 			{
 				if (Players[i].Grabbing != -1)
 				{
-					Players[i].DrawLine(ref s, Players[Players[i].Grabbing].Pos, Player.Colours[i]);
+					// .Pos for unlocked
+					Players[i].DrawLine(ref s, Players[Players[i].Grabbing].drawPos, Player.Colours[i]);
 				}
 			}
 		}

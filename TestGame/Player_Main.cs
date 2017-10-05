@@ -17,7 +17,9 @@ namespace TestGame
 		public int colorID;
 		public int colorDefault;    // Black = They haven't chosen color
 		public int Grabbing;        // ID's
-		public bool canGrab;		// LOCALLY DEFINED for now
+		// Local Variables
+		public bool canGrab;        // LOCALLY DEFINED for now
+		public Vector2 drawPos;
 		public static Color[] Colours = {
 			Color.Red, Color.Blue, Color.Green, Color.Orange, 
 			Color.Yellow, Color.Purple, Color.Brown, Color.Pink,
@@ -34,6 +36,7 @@ namespace TestGame
 			colorDefault = 6;
 			colorID = Colours.Length - 1;
 			Grabbing = -1;
+			drawPos = Game1.screenCenter;
 		}
 		public void UpdateOthers(string[] d)
 		{
@@ -79,26 +82,26 @@ namespace TestGame
 				*/
 			if (k.IsKeyDown(Keys.P))
 			{
-				Pos.Y = 320;
-				Pos.X = 80 + 120 * id;
-				Grabbing = -1;
+				if (canGrab)
+				{
+					Pos.Y = 320;
+					Pos.X = 80 + 120 * id;
+					Grabbing = -1;
+				}
 			}
 			//Mouse Rotation
-			rotation = RotateTo(Pos, new Vector2(m.X, m.Y));
-			//drawTo = new Vector2(m.X, m.Y);
-			/*if (m.LeftButton == ButtonState.Pressed)
-				drawLine = true;
-			else
-				drawLine = false;*/
+			// Unlocked Screen: rotation = RotateTo(Pos, new Vector2(m.X, m.Y));
+			rotation = RotateTo(Game1.screenCenter, new Vector2(m.X, m.Y));
+
 		}
-		public bool drawLine;
 		public Vector2 drawTo;
 		public void Draw(ref SpriteBatch s, ref Texture2D t)
 		{
 			if (active)
 			{
 				// Draw Command = Texture, DrawPos, SourceRec, DestinationRec, Center, rotation, scale, Color...
-				s.Draw(t, Pos, null, null, new Vector2(t.Width / 2, t.Height / 2)
+				// Pos for unlocked
+				s.Draw(t, drawPos, null, null, new Vector2(t.Width / 2, t.Height / 2)
 					   , (float)rotation, new Vector2(0.1f), Colours[this.ID], SpriteEffects.None, 1);
 				//if (drawLine)
 				//	this.DrawLine(ref s, drawTo, Color.Black);

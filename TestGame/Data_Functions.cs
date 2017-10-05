@@ -17,16 +17,44 @@ namespace TestGame
 				40,
 				40);
 		}
-		public bool IsInside(Rectangle r, Vector2 pos)
+		public void Grab(int id)
 		{
-			//if (pos.X < r.X + r.Width && pos.X > r.X)
-			//	if (pos.Y < r.Y + r.Height && pos.Y > r.Y)
-			//		return true;
-			return r.Contains(pos);
-		}
-		public void Grab()
-		{
-			
+			if (oldGrab != -1)
+			{
+				if (Players[oldGrab].Grabbing != id)
+				{
+					oldGrab = -1;
+				}
+			}
+			for (int i = 0; i<playercount; i++)
+			{
+				if(Players[i].active)
+					Players[i].canGrab = true;
+			}
+			for (int i = 0; i<playercount; i++)
+			{
+				if (Players[i].active)
+				{
+					if (Players[i].Grabbing != -1)
+					{
+						if (Players[i].Grabbing == id)
+						{
+							Players[i].canGrab = false; //Can't grab players grabbing you
+							if (oldGrab != i)
+							{
+								c = Math.Sqrt(
+									Math.Pow((Players[id].Pos.X - Players[i].Pos.X), 2) +
+									Math.Pow((Players[id].Pos.Y - Players[i].Pos.Y), 2)
+									);
+								oldGrab = i;
+							}
+							Players[id].Pos.X = Players[i].Pos.X + (float)(c * Math.Cos(Players[i].rotation - Math.PI / 2));
+							Players[id].Pos.Y = Players[i].Pos.Y + (float)(c * Math.Sin(Players[i].rotation - Math.PI / 2));
+						}
+						Players[Players[i].Grabbing].canGrab = false; // Can't grab grabbed players
+					}
+				}
+			}
 		}
 	}
 }
