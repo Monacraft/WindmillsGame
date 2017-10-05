@@ -16,10 +16,13 @@ namespace TestGame
 		public int ID;
 		public int colorID;
 		public int colorDefault;    // Black = They haven't chosen color
-		public int Grabbing;		// ID's
-		public int GrabbedBy; 		// ID's
+		public int Grabbing;        // ID's
+		public bool canGrab;		// LOCALLY DEFINED for now
 		public static Color[] Colours = {
-			Color.Red, Color.Blue, Color.Green, Color.Orange, Color.Yellow, Color.Purple, Color.Black};
+			Color.Red, Color.Blue, Color.Green, Color.Orange, 
+			Color.Yellow, Color.Purple, Color.Brown, Color.Pink,
+			Color.DimGray, Color.Ivory, Color.LightBlue, Color.LimeGreen,
+			Color.Black};
 		public double rotation;
 
 		public Player()
@@ -29,28 +32,30 @@ namespace TestGame
 			ID = -1;
 			rotation = 0;
 			colorDefault = 6;
-			colorID = 6;
+			colorID = Colours.Length - 1;
 			Grabbing = -1;
-			GrabbedBy = -1;
 		}
-		public void UpdateOthers(string[] d) 
+		public void UpdateOthers(string[] d)
 		{
-			/// **************
-			/// Only Called for OTHER Players
-			/// Protocol for Player Information:
-			/// 
-			///          0  1      2    3    4    5      6        7        8
-			/// Planned: ID Active Name xPos yPos Colour Rotation Grabbing GrabbedBy 
-			/// Current: ID Active Name xPos yPos Colour Rotation
-			/// 
-			/// **************
-			Pos.X = float.Parse(d[3], CultureInfo.InvariantCulture);
-			Pos.Y = float.Parse(d[4], CultureInfo.InvariantCulture);
-			this.Name = d[2];
-			this.colorID = Int32.Parse(d[5]);
-			this.rotation = Double.Parse(d[6]);
-			this.Grabbing = Int32.Parse(d[7]);
-			//this.GrabbedBy = Int32.Parse(d[8]);
+			if (active)
+			{
+				/// **************
+				/// Only Called for OTHER Players
+				/// Protocol for Player Information:
+				/// 
+				///          0  1      2    3    4    5      6        7        8
+				/// Planned: ID Active Name xPos yPos Colour Rotation Grabbing
+				/// Current: ID Active Name xPos yPos Colour Rotation
+				/// 
+				/// **************
+				Pos.X = float.Parse(d[3], CultureInfo.InvariantCulture);
+				Pos.Y = float.Parse(d[4], CultureInfo.InvariantCulture);
+				this.Name = d[2];
+				this.colorID = Int32.Parse(d[5]);
+				this.rotation = Double.Parse(d[6]);
+				this.Grabbing = Int32.Parse(d[7]);
+			}
+
 		}
 		public void Update(int id, ref KeyboardState k, ref MouseState m, ref KeyboardState ok, ref MouseState om)
 		{
@@ -62,6 +67,7 @@ namespace TestGame
 				colorID = ID; // Remove this when added picking colour at start-up
 
 			// Controls
+			/*
 			if (k.IsKeyDown(Keys.W))
 				Pos.Y -= 3;
 			if (k.IsKeyDown(Keys.S))
@@ -70,24 +76,33 @@ namespace TestGame
 				Pos.X -= 3;
 			if (k.IsKeyDown(Keys.D))
 				Pos.X += 3;
-
+				*/
+			if (k.IsKeyDown(Keys.P))
+			{
+				Pos.Y = 320;
+				Pos.X = 80 + 120 * id;
+				Grabbing = -1;
+			}
 			//Mouse Rotation
 			rotation = RotateTo(Pos, new Vector2(m.X, m.Y));
-			drawTo = new Vector2(m.X, m.Y);
-			if (m.LeftButton == ButtonState.Pressed)
+			//drawTo = new Vector2(m.X, m.Y);
+			/*if (m.LeftButton == ButtonState.Pressed)
 				drawLine = true;
 			else
-				drawLine = false;
+				drawLine = false;*/
 		}
 		public bool drawLine;
 		public Vector2 drawTo;
 		public void Draw(ref SpriteBatch s, ref Texture2D t)
 		{
-			// Draw Command = Texture, DrawPos, SourceRec, DestinationRec, Center, rotation, scale, Color...
-			s.Draw(t, Pos, null, null, new Vector2(t.Width / 2, t.Height / 2)
-				   , (float)rotation, new Vector2(0.1f), Colours[this.ID], SpriteEffects.None, 1);
-			if (drawLine)
-				this.DrawLine(ref s, drawTo, Color.Black);
+			if (active)
+			{
+				// Draw Command = Texture, DrawPos, SourceRec, DestinationRec, Center, rotation, scale, Color...
+				s.Draw(t, Pos, null, null, new Vector2(t.Width / 2, t.Height / 2)
+					   , (float)rotation, new Vector2(0.1f), Colours[this.ID], SpriteEffects.None, 1);
+				//if (drawLine)
+				//	this.DrawLine(ref s, drawTo, Color.Black);
+			}
 		}
 	}
 }

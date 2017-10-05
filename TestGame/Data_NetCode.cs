@@ -48,6 +48,7 @@ namespace TestGame
 				id = playercount;
 				playercount++;
 			}
+			//Console.WriteLine("{0} {1}", id, Players.Length);
 			if (!Players[id].active)
 			{
 				if (ds[1] == "1")
@@ -57,9 +58,16 @@ namespace TestGame
 			}
 			if (Players[id].active)
 			{
-				if (id != Game1.MyID)
+				if (ds[1] == "0")
 				{
-					Players[id].UpdateOthers(ds);				
+					Players[id].active = false;
+				}
+				else
+				{
+					if (id != Game1.MyID)
+					{
+						Players[id].UpdateOthers(ds);
+					}
 				}
 			}
 			return id;

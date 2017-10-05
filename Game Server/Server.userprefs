@@ -7,8 +7,8 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="GameState.cs">
     <Files>
       <File FileName="Program.cs" Line="26" Column="6" />
-      <File FileName="GameState.cs" Line="42" Column="8" />
-      <File FileName="Server.cs" Line="57" Column="1" />
+      <File FileName="GameState.cs" Line="53" Column="45" />
+      <File FileName="Server.cs" Line="63" Column="50" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />

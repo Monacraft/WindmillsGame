@@ -36,6 +36,8 @@ namespace TestGame
 			graphics.IsFullScreen = false;
 			graphics.ApplyChanges();
 			Window.Title = "WindMills Game - Alpha 0.1";
+			disconnect = false;
+			canexit = false;
 			base.Initialize();
 		}
 
@@ -95,13 +97,18 @@ namespace TestGame
 		public KeyboardState ok;
 		public MouseState om;
 		public static bool update;
+		public static bool disconnect;
+		public static bool canexit;
 		protected override void Update(GameTime gameTime)
 		{
 			// For Mobile devices, this logic will close the Game when the Back button is pressed
 			// Exit() is obsolete on iOS
 #if !__IOS__ && !__TVOS__
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+			{
+
 				Exit();
+			}
 #endif
 			ok = k;                         // Store Old States
 			om = m;
@@ -119,7 +126,19 @@ namespace TestGame
 			mouse.Y = m.Y;
 			base.Update(gameTime);
 		}
-
+		protected override void OnExiting(Object sender, EventArgs args)
+		{
+            CloseGame();
+			base.OnExiting(sender, args);
+		}
+		public void CloseGame()
+		{
+			disconnect = true;
+			while (!canexit)
+			{
+			}
+			Exit();
+		}
 		/// <summary>
 		/// This is called when the game should draw itself.
 		/// </summary>
@@ -135,8 +154,8 @@ namespace TestGame
 
 			GameData.Draw(ref spriteBatch, ref triangle);
 
-			spriteBatch.Draw(CrossHair, mouse, new Rectangle(108,108,40,40),
-							 Color.Black, 0f, new Vector2(20,20), new Vector2(1f), SpriteEffects.None, 1);
+			spriteBatch.Draw(CrossHair, mouse, new Rectangle(108, 108, 40, 40),
+							 Color.Black, 0f, new Vector2(20, 20), new Vector2(1f), SpriteEffects.None, 1);
 			spriteBatch.End();
 
 			base.Draw(gameTime);

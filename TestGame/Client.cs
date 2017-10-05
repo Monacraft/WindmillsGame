@@ -40,13 +40,23 @@ namespace TestGame
 				{
 					toSend = Game1.GameData.Players[Game1.MyID].ClientSend();
 				}
+				if (Game1.disconnect)
+				{
+					toSend = "DISCONNECT " + Game1.MyID.ToString();
+					isConnected = false;
+				}
 				sWriter.WriteLine(toSend);
 				sWriter.Flush();
-				string received = sReader.ReadLine();
-				Game1.MyID = Game1.GameData.ClientRecieve(received);
+				if (isConnected)
+				{
+					string received = sReader.ReadLine();
+					Game1.MyID = Game1.GameData.ClientRecieve(received);
+				}
 			}
+			Game1.canexit = true;
+			/*
 			sWriter.WriteLine("DISCONNECT"); // To Add to server disconnect handling
-			sWriter.Flush();
+			sWriter.Flush();*/
 		}
 	}
 }

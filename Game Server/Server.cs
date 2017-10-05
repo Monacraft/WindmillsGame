@@ -58,15 +58,20 @@ namespace Server
 
 				// shows content on the console.
 				//Console.WriteLine("Recieved: " + sData);
-				int SenderID = MainClass.thisGame.Recieve(sData);
-				string status = MainClass.thisGame.Send(SenderID);
-				//update.WaitOne();
-				//Console.WriteLine("Sending: " + status);
-				sWriter.WriteLine(status);
-				sWriter.Flush();
-				// to write something back.
-				// sWriter.WriteLine("Meaningfull things here");
-				// sWriter.Flush();
+				if (sData.Split(' ')[0] == "DISCONNECT")
+				{
+					MainClass.thisGame.DisconnectRecieve(sData);
+					bClientConnected = false;
+				}
+				else
+				{
+					int SenderID = MainClass.thisGame.Recieve(sData);
+
+					string status = MainClass.thisGame.Send(SenderID);
+
+					sWriter.WriteLine(status);
+					sWriter.Flush();
+				}
 			}
 		}
 	}

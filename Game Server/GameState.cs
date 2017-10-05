@@ -50,6 +50,14 @@ namespace Server
 			Players[id] = id.ToString() + tail;
 			return id;
 		}
+		public void DisconnectRecieve(string data)
+		{
+			string[] d = data.Split(' ');
+
+			int id = Int32.Parse(d[1]);
+			Console.WriteLine(id);
+			Players[id] = id.ToString() + " 0 X X X X X X ";
+		}
 		public string Send(int PlayerTo)
 		{
 			string s = "";
