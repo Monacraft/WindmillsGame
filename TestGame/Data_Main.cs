@@ -12,6 +12,7 @@ namespace TestGame
 		public int playercount;
 		public int MenuInfo;        // Not useful rn, later for selecting level/settings
 		public Player[] Players;    // All Player Data
+		public Vector2 bgPos;
 		public Data()
 		{
 			state = 0;
@@ -23,6 +24,8 @@ namespace TestGame
 				this.Players[i] = new Player();
 			}
 			oldGrab = -1;
+			bgPos = Game1.screenCenter;
+			cbg = 0;
 		}
 		public double c;
 		public int oldGrab;
@@ -44,31 +47,18 @@ namespace TestGame
 				}
 			}
 
-			if (m.LeftButton == ButtonState.Pressed)
-			{
-				if (om.LeftButton == ButtonState.Released && Players[id].Grabbing != -1)
-				{
-					Players[id].Grabbing = -1;
-				}
-				for (int i = 0; i < playercount; i++)
-				{
-					if (i != id && Players[i].active && Players[i].canGrab)
-					if ((mouseBorder().Contains(Players[i].drawPos))) 			// .Pos for unlocked
-						{
-							Players[id].Grabbing = i;
-							Console.WriteLine("You Grabbed P{0}", i);
-						}
-				}
-			}
-			if (m.RightButton == ButtonState.Pressed)
-			{
-				Players[id].Grabbing = -1;
-			}
+			PlayerInput(id, ref k, ref m, ref ok, ref om);
 
+			//bgPos.X = Players[id].Pos.X % 640;  
+			//bgPos.Y = Players[id].Pos.Y % 640;
+			bgPos = Game1.screenCenter - Players[id].Pos;
 		}
 		public void Draw(ref SpriteBatch s, ref Texture2D t)
 		{
 			// Reference for center = Players[id].Pos
+
+			DrawBG(ref s, 3, 3, 1);
+
 			for (int i = 0; i < playercount; i++)
 			{
 				Players[i].Draw(ref s, ref t);

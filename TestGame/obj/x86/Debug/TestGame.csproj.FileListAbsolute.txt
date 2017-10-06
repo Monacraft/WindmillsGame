@@ -48,3 +48,7 @@ C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\obj\x86\D
 C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\obj\x86\Debug\TestGame.pdb
 C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\bin\Debug\Content\Graphics\triangle-tip.xnb
 C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\bin\Debug\Content\Graphics\crosshair.xnb
+C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\bin\Debug\Content\Graphics\brown-rock-bg.xnb
+C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\bin\Debug\Content\Graphics\green-rock-bg.xnb
+C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\bin\Debug\Content\Graphics\magma-rock-bg.xnb
+C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\bin\Debug\Content\Graphics\rock-bg.xnb

@@ -51,6 +51,7 @@ namespace TestGame
 
 		Texture2D triangle;
 		Texture2D CrossHair;
+		public static Texture2D[] bg;
 		public static Texture2D pixel;
 		public static Vector2 mouse;
 		int screenHeight;
@@ -74,6 +75,13 @@ namespace TestGame
 			// ToDo: Load all textures in Data or Player and add Load() to them
 			triangle = Content.Load<Texture2D>("Graphics\\triangle-tip");
 			CrossHair = Content.Load<Texture2D>("Graphics\\crosshair");
+
+			bg = new Texture2D[4];
+			bg[0] = Content.Load<Texture2D>("Graphics\\rock-bg");
+			bg[1] = Content.Load<Texture2D>("Graphics\\brown-rock-bg");
+			bg[2] = Content.Load<Texture2D>("Graphics\\green-rock-bg");
+			bg[3] = Content.Load<Texture2D>("Graphics\\magma-rock-bg");
+
 			pixel = new Texture2D(GraphicsDevice, 1, 1);
 			pixel.SetData<Color>(new Color[] { Color.White });
 
