@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace TestGame
+namespace Server
 {
 	public class Planet
 	{
@@ -23,8 +23,7 @@ namespace TestGame
 		{
 			x = xp;
 			y = yp;
-			Random r = new Random();
-			size = r.Next(minsize, maxsize);
+			size = maxsize;
 			// Colour = player ids for now
 		}
 		public Planet(float xp, float yp, int size)
@@ -51,13 +50,22 @@ namespace TestGame
 				places.RemoveAt(j);
 			}
 
+			Console.WriteLine("Level Generated:");
+			int gridBLOCK = 160;
 			for (int i = 0; i < number; i++)
 			{
 				int xP = planets[i] % gridsize;
 				int yP = (planets[i] - (planets[i] % gridsize)) / gridsize;
-				int xR = xP * (screenw / gridsize) + maxsize; // LOL WORKS PERFECTLY WITH 640!!!!
-				int yR = yP * (screenh / gridsize) + maxsize;
-				p[i] = new Planet(xR, yR);
+				int xR = (xP * gridBLOCK) + 80; // Need to automate padding
+				int yR = (yP * gridBLOCK) + 80;
+				int size = r.Next(minsize, maxsize);
+				float xM = r.Next(xR - (gridBLOCK/2-size/2) + 16, xR + (gridBLOCK/2-size/2) - 16);
+				float yM = r.Next(yR - (gridBLOCK/2-size/2) + 16 , yR + (gridBLOCK/2-size/2) - 16); 
+				// For above:
+				// 11 is to account for player size
+				// technically i should be 16, but current set up has too small gridBlocks
+				Console.WriteLine("{0}, {1}", xM, yM);
+				p[i] = new Planet(xM, yM, size);
 			}
 			return p;
 		}

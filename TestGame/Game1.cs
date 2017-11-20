@@ -49,8 +49,9 @@ namespace TestGame
 		/// all of your content.
 		/// </summary>
 
-		Texture2D triangle;
+		public static Texture2D triangle;
 		Texture2D CrossHair;
+		public static Texture2D circle;
 		public static Texture2D[] bg;
 		public static Texture2D pixel;
 		public static Vector2 mouse;
@@ -75,6 +76,7 @@ namespace TestGame
 			// ToDo: Load all textures in Data or Player and add Load() to them
 			triangle = Content.Load<Texture2D>("Graphics\\triangle-tip");
 			CrossHair = Content.Load<Texture2D>("Graphics\\crosshair");
+			circle = Content.Load<Texture2D>("Graphics\\Circle");
 
 			bg = new Texture2D[4];
 			bg[0] = Content.Load<Texture2D>("Graphics\\rock-bg");
@@ -156,15 +158,17 @@ namespace TestGame
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+			graphics.GraphicsDevice.Clear(Color.Black);
 
 			spriteBatch.Begin();
 			//spriteBatch.Draw(triangle, new Vector2(screenWidth / 2, screenHeight / 2), null, null,
 			//				 Vector2.Zero, 0, new Vector2(0.1f), Color.Red, SpriteEffects.None, 1);
+			/// ###########
+			/// HOW TO DRAW:
+			/// s.Draw(texture, Position to draw, SourceRectangle, Colour, Rotation, Origin, Scale (Vector2), SpriteEffects, depth);
+			/// ###########
 
-
-			GameData.Draw(ref spriteBatch, ref triangle);
-
+			GameData.Draw(ref spriteBatch, ref CrossHair);
 			spriteBatch.Draw(CrossHair, mouse, new Rectangle(108, 108, 40, 40),
 							 Color.Black, 0f, new Vector2(20, 20), new Vector2(1f), SpriteEffects.None, 1);
 			spriteBatch.End();

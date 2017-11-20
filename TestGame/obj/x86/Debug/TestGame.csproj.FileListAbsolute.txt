@@ -52,3 +52,4 @@ C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\bin\Debug
 C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\bin\Debug\Content\Graphics\green-rock-bg.xnb
 C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\bin\Debug\Content\Graphics\magma-rock-bg.xnb
 C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\bin\Debug\Content\Graphics\rock-bg.xnb
+C:\Users\jashv\Documents\Projects\WindmillsGame\WindmillsGame\TestGame\bin\Debug\Content\Graphics\Circle.xnb

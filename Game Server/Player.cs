@@ -1,38 +1,57 @@
 ﻿using System;
+using System.Globalization;
+
 namespace Server
 {
-	public class Player
+	public partial class Player
 	{
 		public float x;
-		public float y;
-		public bool active;
+		public float y;		// MOUSE POSITION
 		public string Name;
 		public int ID;
-		// Other variables like colour, rotation
+		public int active;  // 0 = DC, 1=Alive, 2=Dead
+		public double bearing;
+		public int plannet; // for now, plannet = id (similar to colour)
+		public bool Revive;
+		public bool DownloadedLevel;
 
 		public Player()
 		{
-			x = 0;
-			y = 0;
-			active = false;
 			ID = -1;
+			bearing = 0;
+			active = 1;
+			DownloadedLevel = false;
 		}
-		public void Activate(string N, int ID)
+		public void UpdateThis(string pdat)
 		{
-			Name = N;
-			active = true;
-			this.ID = ID;
-		}
-		public void UpdateThis(float px, float py, string pName)
-		{
-			this.x = px;
-			this.y = py;
-			this.Name = pName;
-			/*if (this.active && !pactive)
-				Console.WriteLine(this.Name + "  disconnected");
-			if (!this.active && pactive)
-				Console.WriteLine(this.Name + "  reconnected");
-			this.active = pactive;*/
+			/// **************
+			/// Protocol for Player Information:
+			/// 
+			///          0  1      2    3    4    5       6       7        8
+			/// Planned: ID Active Name xPos yPos Plannet Bearing 
+			/// Current: ID Active Name xPos yPos Plannet Bearing
+			/// 
+			/// **************
+			string[] d = pdat.Split(' ');
+			// x and y refer to mouse position (for aiming arrow)
+			active = int.Parse(d[1]);
+			if (active == 2)
+			{
+				if(Revive)
+					active = 1;
+			}
+			else
+			{
+				if (active == 1)
+				{
+					Revive = false;
+				}
+			}
+			x = float.Parse(d[3], CultureInfo.InvariantCulture);
+			y = float.Parse(d[4], CultureInfo.InvariantCulture);
+			this.Name = d[2];
+			this.bearing = double.Parse(d[6]);
+			//this.rotation = Double.Parse(d[6]);
 		}
 		public string ClientSend()
 		{
@@ -41,7 +60,7 @@ namespace Server
 		public string String()
 		{
 			// ID[covered-in-data] Active Name xPos yPos
-			return BooltoNum(this.active) + " " + Name + " " + x.ToString() + " " + y.ToString();
+			return active + " " + Name + " " + x.ToString() + " " + y.ToString() + " " + ID.ToString() + " " + bearing.ToString();
 		}
 		public static string BooltoNum(bool b)
 		{

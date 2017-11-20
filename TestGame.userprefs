@@ -5,13 +5,16 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="TestGame\Game1.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestGame\Data_Functions.cs">
     <Files>
-      <File FileName="TestGame\Player_Main.cs" Line="1" Column="1" />
-      <File FileName="TestGame\Player_Functions.cs" Line="1" Column="1" />
-      <File FileName="TestGame\Data_Main.cs" Line="1" Column="1" />
-      <File FileName="TestGame\Data_Functions.cs" Line="22" Column="22" />
-      <File FileName="TestGame\Game1.cs" Line="54" Column="3" />
+      <File FileName="TestGame\Player_Main.cs" Line="44" Column="1" />
+      <File FileName="TestGame\Player_Functions.cs" Line="1" Column="10" />
+      <File FileName="TestGame\Data_Main.cs" Line="28" Column="33" />
+      <File FileName="TestGame\Data_Functions.cs" Line="64" Column="1" />
+      <File FileName="TestGame\Data_NetCode.cs" Line="86" Column="32" />
+      <File FileName="TestGame\Game1.cs" Line="59" Column="19" />
+      <File FileName="TestGame\Client.cs" Line="21" Column="1" />
+      <File FileName="TestGame\Planet.cs" Line="7" Column="8" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />

@@ -10,25 +10,25 @@ namespace Server
 
 	class TcpServer
 	{
-		private TcpListener _server;
-		private Boolean _isRunning;
+		private TcpListener server;
+		private Boolean isRunning;
 
 		public TcpServer(int port)
 		{
-			_server = new TcpListener(IPAddress.Any, port);
-			_server.Start();
+			server = new TcpListener(IPAddress.Any, port);
+			server.Start();
 
-			_isRunning = true;
+			isRunning = true;
 
 			LoopClients();
 		}
 
 		public void LoopClients()
 		{
-			while (_isRunning)
+			while (isRunning)
 			{
 				// wait for client connection
-				TcpClient newClient = _server.AcceptTcpClient();
+				TcpClient newClient = server.AcceptTcpClient();
 				Console.WriteLine("New Client");
 				// client found.
 				// create a thread to handle communication
@@ -60,14 +60,14 @@ namespace Server
 				//Console.WriteLine("Recieved: " + sData);
 				if (sData.Split(' ')[0] == "DISCONNECT")
 				{
-					MainClass.thisGame.DisconnectRecieve(sData);
+					MainClass.gameData.DisconnectRecieve(sData);
 					bClientConnected = false;
 				}
 				else
 				{
-					int SenderID = MainClass.thisGame.Recieve(sData);
+					int SenderID = MainClass.gameData.Recieve(sData);
 
-					string status = MainClass.thisGame.Send(SenderID);
+					string status = MainClass.gameData.ServerSend(SenderID);
 
 					sWriter.WriteLine(status);
 					sWriter.Flush();

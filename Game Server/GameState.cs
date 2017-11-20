@@ -3,6 +3,15 @@ namespace Server
 {
 	public class GameState
 	{
+		/// <summary>
+		/// ################
+		/// THIS CLASS FOR INFORMATION HAS BEEN REDACTED
+		/// 
+		///// Reason: It simply transmitted data between players as strings. Good if clients control data
+		/////         The Data Class converts recieved info to a variables, allowing server side control.
+		/// 
+		/// ################
+		/// </summary>
 		// State|MenuInfo|MyID|Players|[P1=P2=P3=P4]|[ServerName=ServerMaps,,,]
 		// ID Active Name xPos yPos
 		public int state; // 0 = Connecting-Players, 1 = In-Menu, 2 = In-Game

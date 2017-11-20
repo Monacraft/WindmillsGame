@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/jashv/Documents/Projects/WindmillsGame/WindmillsGame/TestGame/Content/Graphics/triangle.png</SourceFile>
-  <SourceTime>2017-10-01T00:19:34.4536902+10:00</SourceTime>
+  <SourceTime>2017-11-18T07:52:50.687994+11:00</SourceTime>
   <DestFile>C:/Users/jashv/Documents/Projects/WindmillsGame/WindmillsGame/TestGame/Content/bin/DesktopGL/Graphics/triangle.xnb</DestFile>
-  <DestTime>2017-10-01T22:05:17.2339079+11:00</DestTime>
+  <DestTime>2017-11-18T07:54:18.7471291+11:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-02T02:05:36+11:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

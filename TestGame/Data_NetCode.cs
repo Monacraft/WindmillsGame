@@ -26,9 +26,22 @@ namespace TestGame
 			if (state == 1)
 			{
 				// Menu
-				MenuInfo = Int32.Parse(d[1]);
-				int P = Int32.Parse(d[3]);
-				playercount = P;
+				//MenuInfo = d[1]
+				if (d[1] != "")
+				{
+					Console.WriteLine(";{0};", d[1]);
+					DownloadedLevel = false;
+					Planets.Clear();
+
+					foreach (var planetdat in d[1].Split('='))
+					{
+						Planets.Add(Planet.Read(planetdat));
+						Console.WriteLine(planetdat);
+					}
+					Console.WriteLine("Finished Download");
+					DownloadedLevel = true;
+				}
+				playercount = Int32.Parse(d[3]);
 				//Console.WriteLine(P);
 				foreach (var playerdat in d[4].Split('='))
 				{
@@ -37,10 +50,11 @@ namespace TestGame
 			}
 			return id;
 		}
+
 		public int ParsePlayers(string pdat)
 		{
 			// Only Called For Players Not Client
-			// ID Active Name xPos yPos [Other Information]
+			// ID Active Name xPos yPos Planet Bearing
 			string[] ds = pdat.Split(' ');
 			int id = Int32.Parse(ds[0]);
 			if (id == -1)
@@ -49,18 +63,31 @@ namespace TestGame
 				playercount++;
 			}
 			//Console.WriteLine("{0} {1}", id, Players.Length);
-			if (!Players[id].active)
+			if (Players[id].active == 0)
 			{
 				if (ds[1] == "1")
 				{
 					Players[id].Activate(ds[2], id);
 				}
 			}
-			if (Players[id].active)
+			if (Players[id].active > 0)
 			{
-				if (ds[1] == "0")
+				Players[id].active = int.Parse(ds[1]);
+				if (Players[id].active == 1)
 				{
-					Players[id].active = false;
+					if (Players[id].Kill)
+					{
+						Players[id].active = 2;
+					}
+				}
+				else
+				{
+					if (Players[id].active == 2)
+						Players[id].Kill = false;
+				}
+				if (Players[id].active == 0)
+				{
+					// Lol you got fucked mate
 				}
 				else
 				{

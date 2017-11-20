@@ -4,11 +4,14 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="GameState.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Server.cs">
     <Files>
-      <File FileName="Program.cs" Line="26" Column="6" />
-      <File FileName="GameState.cs" Line="53" Column="45" />
-      <File FileName="Server.cs" Line="63" Column="50" />
+      <File FileName="Data.cs" Line="45" Column="13" />
+      <File FileName="Game.cs" Line="23" Column="5" />
+      <File FileName="Player.cs" Line="46" Column="6" />
+      <File FileName="Server.cs" Line="47" Column="77" />
+      <File FileName="Program.cs" Line="20" Column="41" />
+      <File FileName="Planet.cs" Line="13" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />

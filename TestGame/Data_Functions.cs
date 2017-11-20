@@ -17,67 +17,22 @@ namespace TestGame
 				40,
 				40);
 		}
-		public void Grab(int id)
-		{
-			if (oldGrab != -1)
-			{
-				if (Players[oldGrab].Grabbing != id)
-				{
-					oldGrab = -1;
-				}
-			}
-			for (int i = 0; i<playercount; i++)
-			{
-				if(Players[i].active)
-					Players[i].canGrab = true;
-			}
-			for (int i = 0; i<playercount; i++)
-			{
-				if (Players[i].active)
-				{
-					if (Players[i].Grabbing != -1)
-					{
-						if (Players[i].Grabbing == id)
-						{
-							Players[i].canGrab = false; //Can't grab players grabbing you
-							if (oldGrab != i)
-							{
-								c = Math.Sqrt(
-									Math.Pow((Players[id].Pos.X - Players[i].Pos.X), 2) +
-									Math.Pow((Players[id].Pos.Y - Players[i].Pos.Y), 2)
-									);
-								oldGrab = i;
-							}
-							Players[id].Pos.X = Players[i].Pos.X + (float)(c * Math.Cos(Players[i].rotation - Math.PI / 2));
-							Players[id].Pos.Y = Players[i].Pos.Y + (float)(c * Math.Sin(Players[i].rotation - Math.PI / 2));
-						}
-						Players[Players[i].Grabbing].canGrab = false; // Can't grab grabbed players
-					}
-				}
-			}
-		}
 		public void PlayerInput(int id, ref KeyboardState k, ref MouseState m, ref KeyboardState ok, ref MouseState om)
 		{
 
 			if (m.LeftButton == ButtonState.Pressed)
 			{
-				if (om.LeftButton == ButtonState.Released && Players[id].Grabbing != -1)
-				{
-					Players[id].Grabbing = -1;
-				}
-				for (int i = 0; i<playercount; i++)
-				{
-					if (i != id && Players[i].active && Players[i].canGrab)
-					if ((mouseBorder().Contains(Players[i].drawPos))) 			// .Pos for unlocked
-						{
-							Players[id].Grabbing = i;
-							Console.WriteLine("You Grabbed P{0}", i);
-						}
-				}
+
 			}
-			if (m.RightButton == ButtonState.Pressed)
+			if (m.RightButton == ButtonState.Pressed && om.RightButton == ButtonState.Released)
 			{
-				Players[id].Grabbing = -1;
+				Players[id].Kill = true;
+				Players[id].active = 2; // Kill Player
+
+			}
+			if (om.X != m.X)
+			{
+				//Console.WriteLine("{0},{1}", om.X.ToString(), om.Y.ToString());
 			}
 			if (k.IsKeyDown(Keys.B) && ok.IsKeyUp(Keys.B))
 			{
@@ -87,23 +42,31 @@ namespace TestGame
 			}
 		}
 		public int cbg;
-		public void DrawBG(ref SpriteBatch s, int width, int height, int scale)
+		public void DrawBG(ref SpriteBatch s)
 		{
-			// BgPos gives center of grid width*height
-			Vector2 Bgcenter = new Vector2((width * Game1.bg[cbg].Width * scale) / 2, (height * Game1.bg[cbg].Height * scale) / 2);
-			Vector2 drawat = bgPos - Bgcenter; // Top Left Item
+			s.Draw(Game1.bg[cbg], Vector2.Zero, null,
+					 Color.White, 0f, Vector2.Zero, new Vector2(2), SpriteEffects.None, 1);
+		}
+		public Vector2 PlanetPos(Planet P)
+		{
 
-			for (int i = 0; i < width; i++)
-			{
-				for (int j = 0; j < height; j++)
+			return Vector2.Zero;
+		}
+		public void DrawPlanets(ref SpriteBatch s)
+		{
+			int count = 0;
+			if (DownloadedLevel)
+				if (Game1.MyID != -1)
 				{
-					s.Draw(Game1.bg[cbg], drawat, null,
-							 Color.White, 0f, Vector2.Zero, new Vector2(scale), SpriteEffects.None, 1);
-					drawat.Y += Game1.bg[cbg].Height * scale;
+					for (int i = 0; i < Planets.Count; i++)
+					{
+						//Console.WriteLine("Draw {0}, {1}, {2}, {3}", Planets[i].x, Planets[i].y, Player.Colours[count], Planets[i].size / 128f);
+						s.Draw(Game1.circle, new Vector2(Planets[i].x, Planets[i].y), null,
+							   Player.Colours[count], 0f, new Vector2(128, 128), new Vector2(Planets[i].size / 256f), SpriteEffects.None, 0);
+						count++;
+					}
 				}
-				drawat.X += Game1.bg[cbg].Width * scale;
-				drawat.Y = bgPos.Y - Bgcenter.Y;
-			}
 		}
 	}
 }
+

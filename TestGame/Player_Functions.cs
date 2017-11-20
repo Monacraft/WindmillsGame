@@ -11,13 +11,11 @@ namespace TestGame
 		public void Activate(string N, int ID)
 		{
 			Name = N;
-			active = true;
 			this.ID = ID;
+			planet = ID;
 			Console.WriteLine(this.ID.ToString());
-			if (this.ID >= 0)
-			{
-				colorID = this.ID;
-			}
+			active = 1;
+			Kill = false;
 		}
 		public string ClientSend()
 		{
@@ -26,8 +24,8 @@ namespace TestGame
 		public string String()
 		{
 			// ID[covered-in-data] .....
-			return BooltoNum(this.active) + " " + Name + " " + Pos.X.ToString() + " " + Pos.Y.ToString()
-				                                                  + " " + colorID.ToString() + " " + rotation.ToString() + " " + Grabbing.ToString();
+			return active.ToString() + " " + Name + " " + Pos.X.ToString() + " " + Pos.Y.ToString()
+				                                                  + " " + planet.ToString() + " " + bearing.ToString();
 		}
 		public static string BooltoNum(bool b)
 		{
@@ -70,12 +68,18 @@ namespace TestGame
 		}
 		public void DrawLine(ref SpriteBatch s, Vector2 To, Color c)
 		{
-			Vector2 usePos = drawPos; // usePos = Pos for unlocked
+			Vector2 usePos = Pos;
 			Vector2 edge = To - usePos;
 			float angle = (float)Math.Atan2(edge.Y, edge.X);
 	       	s.Draw(Game1.pixel, new Rectangle((int) usePos.X, (int) usePos.Y, (int)edge.Length(), 2), 
 			       null, c, angle, Vector2.Zero,
 			              SpriteEffects.None, 1);
+		}
+		public Vector2 PlanetPos(int PlanetID)
+		{
+			float angle = (float)(bearing+Math.PI/2);
+			return new Vector2(Game1.GameData.Planets[PlanetID].x + (float)(Math.Cos(angle) * (Game1.GameData.Planets[PlanetID].size/2)),
+			                   Game1.GameData.Planets[PlanetID].y + (float)(Math.Sin(angle) * (Game1.GameData.Planets[PlanetID].size/2)));
 		}
 	}
 }
