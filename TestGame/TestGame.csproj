@@ -47,6 +47,7 @@
     <Compile Include="Player_Functions.cs" />
     <Compile Include="Data_NetCode.cs" />
     <Compile Include="Planet.cs" />
+    <Compile Include="Arrow %28Client%29.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />

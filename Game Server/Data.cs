@@ -13,6 +13,8 @@ namespace Server
 		public Player[] Players;
 		public List<Planet> Planets;
 		public List<int> Slots;
+		public List<int> TurnOrder;
+		public List<int> Disconnect;
 		string servername;
 		string serversettings;
 
@@ -21,15 +23,26 @@ namespace Server
 			state = 0;
 			playercount = 0;
 			Players = new Player[16];
+			for (int i = 0; i < 16; i++)
+			{
+				Players[i] = new Player(i);
+				Players[i].active = 0;
+			}
 			Slots = new List<int>();
 			for (int i = 0; i < 16; i++)
 			{
 				Slots.Add(i);
 			}
 			Planets = new List<Planet>();
+			FiredArrows = new List<Arrow>();
+			Disconnect = new List<int>();
+			LockRead = false;
+			TurnOrder = new List<int>();
+			currentTurn = 0;
 			PlanetData = "";
 			servername = Name;
 			serversettings = settings;
+			creatingLevel = false;
 
 			NewLevel();
 			StartGame();
@@ -43,12 +56,27 @@ namespace Server
 			{
 				id = Slots[0];
 				Slots.RemoveAt(0);
-				Players[id] = new Player();
+				LockRead = true;
+				TurnOrder.Add(id);
+				LockRead = false;
+				Players[id] = new Player(id);
 				playercount++;
 			}
 			if (Players[id].active == 1) // becomes 1 after they recieve an ID
 			{
 				Players[id].UpdateThis(pdat);
+				if (Players[id].FireArrow)
+				{
+					if (currentTurn >= TurnOrder.Count)
+						currentTurn = 0;
+					if (TurnOrder[currentTurn] == id)
+					{
+						Console.WriteLine("{0} fired an Arrow", id);
+						FireArrow(id);
+						currentTurn++;
+					}
+					Players[id].FireArrow = false;
+				}
 			}
 			if (Players[id].active == 2)
 			{
@@ -63,6 +91,9 @@ namespace Server
 			int id = Int32.Parse(d[1]);
 			Console.WriteLine(id);
 			Players[id].active = 0;
+			LockRead = true;
+			TurnOrder.Remove(id);
+			LockRead = false;
 			playercount--;
 			Slots.Insert(0, id);
 		}
@@ -77,18 +108,30 @@ namespace Server
 				Console.WriteLine("Sending Level");
 			}
 			s = state.ToString() + "|" + LevelInfo + "|" + PlayerTo.ToString() + "|" + this.playercount.ToString() + "|";
-			for (int i = 0; i < playercount; i++)
+			foreach (var i in Players)
 			{
-				s += i.ToString() + " " + Players[i].String() + "=";
+				s += i.ID.ToString() + " " + i.String() + "=";
+
 			}
-			return s.Substring(0, (s.Length - 1));
+			if(TurnOrder.Count > 0)
+				s = s.Substring(0, (s.Length - 1));
+			s += "|";
+			foreach (var f in FiredArrows)
+			{
+				s += f.Write() + "=";
+			}
+			if(FiredArrows.Count > 0)
+				s = s.Substring(0, (s.Length - 1));
+			return s;
 		}
 		public int Recieve(string dat)
 		{
 			return ParsePlayer(dat);
 		}
+		public bool creatingLevel;
 		public void NewLevel()
 		{
+			creatingLevel = true;
 			Planets.Clear();
 			Planets.AddRange(Planet.GenerateLevel(7));
 			PlanetData = "";
@@ -97,7 +140,7 @@ namespace Server
 				PlanetData += p.Write() + "=";
 			}
 			PlanetData = PlanetData.Substring(0, PlanetData.Length - 1);
-			for (int i = 0; i < playercount; i++)
+			foreach (var i in Lock(ref TurnOrder))
 			{
 				if (Players[i].active == 2)
 				{
@@ -106,6 +149,15 @@ namespace Server
 				}
 				Players[i].DownloadedLevel = false;
 			}
+			creatingLevel = false;
+		}
+		public bool LockRead;
+		public List<int> Lock(ref List<int> T)
+		{
+			while (LockRead)
+			{
+			}
+			return T;
 		}
 	}
 }

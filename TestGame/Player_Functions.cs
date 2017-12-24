@@ -19,13 +19,16 @@ namespace TestGame
 		}
 		public string ClientSend()
 		{
-			return ID.ToString() + " " + this.String();
+			string s = ID.ToString() + " " + this.String();
+			if (FireArrow == 1)
+				FireArrow = 0;
+			return s;
 		}
 		public string String()
 		{
 			// ID[covered-in-data] .....
 			return active.ToString() + " " + Name + " " + Pos.X.ToString() + " " + Pos.Y.ToString()
-				                                                  + " " + planet.ToString() + " " + bearing.ToString();
+				         + " " + planet.ToString() + " " + bearing.ToString() + " " + FireArrow.ToString();
 		}
 		public static string BooltoNum(bool b)
 		{

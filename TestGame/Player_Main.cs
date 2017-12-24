@@ -21,12 +21,14 @@ namespace TestGame
 		public int planet;
 		public double bearing;
 		public bool Kill;
+		public int FireArrow;
 
 		public Player()
 		{
 			Pos = new Vector2();
 			active = 0;
 			ID = -1;
+			FireArrow = 0;
 		}
 		public void UpdateOthers(string[] d)
 		{
@@ -72,7 +74,7 @@ namespace TestGame
 			{
 				// Crosshair
 				s.Draw(t, Pos, new Rectangle(108, 108, 40, 40),
-				       Colours[this.ID], 0, new Vector2(20, 20), new Vector2(1f), SpriteEffects.None, 1);
+				       Colours[this.ID], 0, new Vector2(20, 20), new Vector2(0.5f), SpriteEffects.None, 1);
 
 				// TODO: Replace ID with planet (below)
 				s.Draw(Game1.triangle, PlanetPos(ID), null, Colours[ID], (float)(bearing+Math.PI),

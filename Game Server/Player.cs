@@ -14,13 +14,15 @@ namespace Server
 		public int plannet; // for now, plannet = id (similar to colour)
 		public bool Revive;
 		public bool DownloadedLevel;
+		public bool FireArrow;
 
-		public Player()
+		public Player(int id)
 		{
-			ID = -1;
+			ID = id;
 			bearing = 0;
 			active = 1;
 			DownloadedLevel = false;
+			FireArrow = false;
 		}
 		public void UpdateThis(string pdat)
 		{
@@ -28,7 +30,7 @@ namespace Server
 			/// Protocol for Player Information:
 			/// 
 			///          0  1      2    3    4    5       6       7        8
-			/// Planned: ID Active Name xPos yPos Plannet Bearing 
+			/// Planned: ID Active Name xPos yPos Plannet Bearing Fire
 			/// Current: ID Active Name xPos yPos Plannet Bearing
 			/// 
 			/// **************
@@ -51,6 +53,8 @@ namespace Server
 			y = float.Parse(d[4], CultureInfo.InvariantCulture);
 			this.Name = d[2];
 			this.bearing = double.Parse(d[6]);
+			if (d[7] == "1")
+				FireArrow = true;
 			//this.rotation = Double.Parse(d[6]);
 		}
 		public string ClientSend()

@@ -12,7 +12,7 @@ namespace TestGame
 		{
 			// Recieve Server Info as String
 			// Parse Game-data, Pass on Player Stuff to ParsePlayers()
-			// State|MenuInfo|MyID|Players|[P1=P2=P3=P4]
+			// State|MenuInfo|MyID|Players|[P1=P2=P3=P4]|ID=X=Y=Rotation
 			string[] d = dat.Split('|');
 			Int32.TryParse(d[0], out state);
 			int id = Int32.Parse(d[2]);
@@ -31,12 +31,20 @@ namespace TestGame
 				{
 					Console.WriteLine(";{0};", d[1]);
 					DownloadedLevel = false;
-					Planets.Clear();
+					while (drawing)
+					{
+					}
+					Planet.currPlanets = 0;
 
 					foreach (var planetdat in d[1].Split('='))
 					{
-						Planets.Add(Planet.Read(planetdat));
+						Planets[Planet.currPlanets] = Planet.Read(planetdat);
+						Planet.currPlanets++;
 						Console.WriteLine(planetdat);
+					}
+					for (int i = Planet.currPlanets; i < Planet.maxPlanets; i++)
+					{
+						Planets[i] = new Planet();
 					}
 					Console.WriteLine("Finished Download");
 					DownloadedLevel = true;
@@ -47,6 +55,21 @@ namespace TestGame
 				{
 					this.ParsePlayers(playerdat);
 				}
+				if (d[5] == "")
+				{
+					foreach (var a in Arrows)
+					{
+						a.Fired = false;
+					}
+				}
+				else 
+				{
+					int c = 0;
+					foreach (var f in d[5].Split('='))
+					{
+						Arrows[c].ArrowRead(f);
+					}
+				}
 			}
 			return id;
 		}
@@ -56,6 +79,7 @@ namespace TestGame
 			// Only Called For Players Not Client
 			// ID Active Name xPos yPos Planet Bearing
 			string[] ds = pdat.Split(' ');
+			//Console.WriteLine(pdat + " " + ds[0]);
 			int id = Int32.Parse(ds[0]);
 			if (id == -1)
 			{

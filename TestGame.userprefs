@@ -5,16 +5,17 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="TestGame\Data_Functions.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestGame\Data_Main.cs">
     <Files>
-      <File FileName="TestGame\Player_Main.cs" Line="44" Column="1" />
-      <File FileName="TestGame\Player_Functions.cs" Line="1" Column="10" />
-      <File FileName="TestGame\Data_Main.cs" Line="28" Column="33" />
-      <File FileName="TestGame\Data_Functions.cs" Line="64" Column="1" />
-      <File FileName="TestGame\Data_NetCode.cs" Line="86" Column="32" />
-      <File FileName="TestGame\Game1.cs" Line="59" Column="19" />
-      <File FileName="TestGame\Client.cs" Line="21" Column="1" />
-      <File FileName="TestGame\Planet.cs" Line="7" Column="8" />
+      <File FileName="TestGame\Player_Main.cs" Line="12" Column="20" />
+      <File FileName="TestGame\Player_Functions.cs" Line="20" Column="29" />
+      <File FileName="TestGame\Data_Main.cs" Line="42" Column="12" />
+      <File FileName="TestGame\Data_Functions.cs" Line="20" Column="94" />
+      <File FileName="TestGame\Data_NetCode.cs" Line="64" Column="6" />
+      <File FileName="TestGame\Game1.cs" Line="72" Column="26" />
+      <File FileName="TestGame\Client.cs" Line="52" Column="1" />
+      <File FileName="TestGame\Planet.cs" Line="42" Column="11" />
+      <File FileName="TestGame\Arrow (Client).cs" Line="31" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />

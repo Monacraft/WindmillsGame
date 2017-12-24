@@ -23,30 +23,33 @@ namespace Server
 			{
 				alldead = false;
 			}
-			for (int i = 0; i < playercount; i++)
+			foreach (var i in Lock(ref TurnOrder))
 			{
 				if (Players[i].active == 1)
 				{
 					alldead = false;
 				}
 			}
-			if (alldead)
+			if (alldead && !creatingLevel)
 			{
 				NewLevel(); // New map
-				for (int i = 0; i < playercount; i++)
+				foreach (var i in Lock(ref TurnOrder))
 				{
 					// Reset Player Variables
 					Players[i].DownloadedLevel = false;
 					Players[i].Revive = true;
 				}
 			}
+			else
+			{
+				ArrowUpdate();
+			}
 		}
-		public void Arrow(int id)
-		{
-			// id = Who fired the arrow
-			Players[id]
 
+		public int currentTurn;
+		public void PlayerUpdate()
+		{
+			
 		}
 	}
-
 }

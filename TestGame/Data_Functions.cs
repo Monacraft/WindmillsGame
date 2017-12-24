@@ -20,9 +20,9 @@ namespace TestGame
 		public void PlayerInput(int id, ref KeyboardState k, ref MouseState m, ref KeyboardState ok, ref MouseState om)
 		{
 
-			if (m.LeftButton == ButtonState.Pressed)
+			if (m.LeftButton == ButtonState.Pressed && om.LeftButton == ButtonState.Released)
 			{
-
+				Players[id].FireArrow = 1;
 			}
 			if (m.RightButton == ButtonState.Pressed && om.RightButton == ButtonState.Released)
 			{
@@ -52,19 +52,33 @@ namespace TestGame
 
 			return Vector2.Zero;
 		}
+		public bool drawing = false;
 		public void DrawPlanets(ref SpriteBatch s)
 		{
 			int count = 0;
 			if (DownloadedLevel)
 				if (Game1.MyID != -1)
 				{
-					for (int i = 0; i < Planets.Count; i++)
+					drawing = true;
+					for (int i = 0; i < Planet.maxPlanets-1; i++)
 					{
-						//Console.WriteLine("Draw {0}, {1}, {2}, {3}", Planets[i].x, Planets[i].y, Player.Colours[count], Planets[i].size / 128f);
-						s.Draw(Game1.circle, new Vector2(Planets[i].x, Planets[i].y), null,
-							   Player.Colours[count], 0f, new Vector2(128, 128), new Vector2(Planets[i].size / 256f), SpriteEffects.None, 0);
-						count++;
+						if (Planets[i].real)
+						{
+							int index = i;
+							try
+							{
+								//Console.WriteLine("Draw {0}, {1}, {2}, {3}", Planets[i].x, Planets[i].y, Player.Colours[count], Planets[i].size / 128f);
+								s.Draw(Game1.circle, new Vector2(Planets[index].x, Planets[index].y), null,
+									   Player.Colours[count], 0f, new Vector2(128, 128), new Vector2(Planets[index].size / 256f), SpriteEffects.None, 0);
+								count++;
+							}
+							catch
+							{
+								Console.WriteLine(i);
+							}
+						}
 					}
+					drawing = false;
 				}
 		}
 	}

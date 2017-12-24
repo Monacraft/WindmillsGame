@@ -77,6 +77,7 @@ namespace TestGame
 			triangle = Content.Load<Texture2D>("Graphics\\triangle-tip");
 			CrossHair = Content.Load<Texture2D>("Graphics\\crosshair");
 			circle = Content.Load<Texture2D>("Graphics\\Circle");
+			Arrow.tex = Content.Load<Texture2D>("Graphics\\Arrow");
 
 			bg = new Texture2D[4];
 			bg[0] = Content.Load<Texture2D>("Graphics\\rock-bg");
@@ -170,7 +171,7 @@ namespace TestGame
 
 			GameData.Draw(ref spriteBatch, ref CrossHair);
 			spriteBatch.Draw(CrossHair, mouse, new Rectangle(108, 108, 40, 40),
-							 Color.Black, 0f, new Vector2(20, 20), new Vector2(1f), SpriteEffects.None, 1);
+							 Color.White, 0f, new Vector2(20, 20), new Vector2(0.8f), SpriteEffects.None, 1);
 			spriteBatch.End();
 
 			base.Draw(gameTime);
